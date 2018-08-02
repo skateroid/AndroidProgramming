@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="weatheractivity">Жизненный цикл WeatherActivity!</string>
+    <string name="other">Other</string>
+    <string name="cretae_action">Create action</string>
+    <string name="fullname">Fullname</string>
+    <string name="title_activity_base">BaseActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="done">DONE</string>
+    <string name="nav_history">History</string>
+    <string name="username">Ivan Ivanov</string>
+    <string name="temp">+18</string>
+    <string name="action_info">info</string>
+    <string name="action_about">About application</string>
+    <string name="popup_temp_add">Add to history</string>
+    <string name="popup_temp_refresh">Refresh temp</string>
+    <string name="title_location_permission">Location Permission</string>
+    <string name="text_location_permission">напиши здесь че-нибудь потом</string>
+    <string name="ok">ok</string>
+    <string name="web_gismeteo">Gismeteo</string>
+    <string name="btn_go_to">GO</string>
+    <string name="url_input_hint">https://www.gismeteo.ru/weather-moscow-4368/3-days/</string>
+</resources>
