@@ -59,15 +59,19 @@ public class BaseActivity extends AppCompatActivity
     public final static String  SENSOR_VAL = "SENSOR_VAL";
     public final static String  SENSOR_VAL2 = "SENSOR_VAL2";
     public final static String  SENSOR_VAL_TEMP = "SENSOR_VAL_TEMP";
+    private final static String API_KEY = "8b3ed8818d3b9877948d4467f72a0b27";
+    private final static String TAG = "TAG";
 
     //инициализация переменных
     private FloatingActionButton fab;
     private TextView textView;
+    private TextView tv_city;
     private static final String TEXT = "TEXT";
     private static String contry;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private TextView tv_hum;
     private TextView tv_temp;
+    private Button button;
     private PrefsHelper prefsHelper;
     private BroadcastReceiver broadcastReceiverAcc;
     private BroadcastReceiver broadcastReceiverHum;
@@ -86,7 +90,7 @@ public class BaseActivity extends AppCompatActivity
 
         initRetrofit();
         initLayout();
-        initEvents();
+
         checkLocationPermission();
         Intent intent = new Intent(BaseActivity.this, MyService.class);
         startService(intent);
@@ -126,18 +130,22 @@ public class BaseActivity extends AppCompatActivity
         };
         registerReceiver(broadcastReceiverAcc, intentFilter);
         registerReceiver(broadcastReceiverHum, intentFilterHum);
-        registerReceiver(broadcastReceiverTemp, intentFilterTemp);
+//        registerReceiver(broadcastReceiverTemp, intentFilterTemp);
     }
 
     private void initEvents() {
-//        Button button = findViewById(R.id.button);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                savePreferences();    // сохранить настройки
-//                requestRetrofit(editCity.getText().toString(), editApiKey.getText().toString());
-//            }
-//        });
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+    //                savePreferences();    // сохранить настройки
+//                    String getSP = prefsHelper.getSharedPreferences(Constants.CITY);
+//                    if (!getSP.equals("")) {
+                        requestRetrofit("Moscow", API_KEY);
+//                    }
+                }
+            });
+
     }
 
     private void initRetrofit() {
@@ -174,6 +182,8 @@ public class BaseActivity extends AppCompatActivity
                 addFragment(new CreateActionFragment());
             }
         });
+        tv_city = findViewById(R.id.tv_country);
+        button = findViewById(R.id.btn_refresh);
 
         //addFragment(new WeatherFragment());
         startWeatherFragment(contry);
@@ -187,6 +197,7 @@ public class BaseActivity extends AppCompatActivity
 //            toolbarLayout.setTitle(getSP);
             getSupportActionBar().setTitle(getSP);
         }
+        initEvents();
     }
 
     @Override
@@ -349,20 +360,20 @@ public class BaseActivity extends AppCompatActivity
 //        toolbarLayout.setTitle(country);
     }
 
-//    private void requestRetrofit(String city, String keyApi){
-//        openWeather.loadWeather(city, keyApi)
-//                .enqueue(new Callback<WeatherRequest>() {
-//                    @Override
-//                    public void onResponse(Call<WeatherRequest> call, Response<WeatherRequest> response) {
-//                        if (response.body() != null)
-//                            textTemp.setText(Float.toString(response.body().getMain().getTemp()));
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<WeatherRequest> call, Throwable t) {
-//                        textTemp.setText("Error");
-//                    }
-//                });
-//
-//    }
+    private void requestRetrofit(String city, String keyApi){
+        openWeather.loadWeather(city, keyApi)
+                .enqueue(new Callback<WeatherRequest>() {
+                    @Override
+                    public void onResponse(Call<WeatherRequest> call, Response<WeatherRequest> response) {
+                        if (response.body() != null)
+                            textView.setText(Double.toString(response.body().getMain().getTemp()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<WeatherRequest> call, Throwable t) {
+                        Log.d(TAG,"Error");
+                    }
+                });
+
+    }
 }
